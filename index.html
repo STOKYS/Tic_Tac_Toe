@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/default.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
@@ -19,21 +20,44 @@
         </div>
         <div class="controls">
             <div class="info">
-                <h1>Tic Tac Toe</h1>
-                <h2>Round: 1</h2>
-                <h3></h3>
+                <h1 id="title">Tic Tac Toe</h1>
+                <h2 id="round">Round: 1</h2>
+                <h3 id="who">Crosses Turn</h3>
             </div>
-            <div class="options">
-                <button>Helping grid</button>
+            <div class="options" style="height: 85px;">
+                <div class="main_btn">
+                    <button style="background-color: green;" id="start">Start</button>
+                    <button style="background-color: brown;" id="end">End</button>
+                </div>
+                <div class="side_btn">
+                    <button id="side_grid">Helping grid: off</button>
+                    <button id="side_voice">Voiceover: off</button>
+                    <button id="gamer_mode" style="background-image: url('img/gamer.jpg'); background-size: cover; color: white; font-family: 'Audiowide', cursive;  background-position: center;"><abbr title="Are you a true gamer?!">GAMER MODE</abbr></button>
+                </div>
             </div>
-            <div id="console">
+            <div class="data">
+                <div id="console">
 
+                </div>
+                <div style="height: 300px; border: 1px solid black;">
+                    <table>
+                        <tr>
+                            <th>Wienner</th>
+                            <th>Rounds</th>
+                        </tr>
+                        <tr>
+                            <td>Sample Name</td>
+                            <td>Sample Rounds</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
     <footer>
 
     </footer>
+    <script src="js/setup.js"></script>
     <script src="js/game.js"></script>
 </body>
 
