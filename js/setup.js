@@ -2,63 +2,113 @@ const gridShow = document.getElementById("side_grid")
 const voice = document.getElementById("side_voice")
 const startBtn = document.getElementById("start")
 const endBtn = document.getElementById("end")
+const gridSld = document.getElementById("slider_grid")
+const winSld = document.getElementById("slider_win")
+const gridText = document.getElementById("gridText")
+const winText = document.getElementById("winText")
 
 let opt_grid = false
 let opt_voice = false
 let gamermode = false
+let folder = "nongamer"
+let game_started = false
+let gridNum = 28;
+let gridSize = 32;
+let pointsToWin = 5;
+let canvasX = null
+let canvasY = null
+let gridX = null
+let gridY = null
+let tiles = []
 
-gridShow.addEventListener("click", function(){
+canvas = document.getElementById("cvgame")
+ctx = canvas.getContext("2d")
+
+const cross = new Image()
+cross.src = "img/cross.png"
+const circle = new Image()
+circle.src = "img/circle.png"
+const blue = new Image()
+blue.src = "img/blue.png"
+const red = new Image()
+red.src = "img/red.png"
+
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+// main buttons
+
+startBtn.addEventListener("click", function () {
+    startBtn.disabled = true
+    endBtn.disabled = false
+    game_started = true
+    if (opt_voice) {
+        let audio = new Audio(`audio/${folder}/start.mp3`);
+        audio.play();
+    }
+    message(`Game has started`)
+})
+
+endBtn.addEventListener("click", function () {
+    startBtn.disabled = false
+    endBtn.disabled = true
+    game_started = false
+    if (opt_voice) {
+        let audio = new Audio(`audio/${folder}/end.mp3`);
+        audio.play();
+    }
+    message(`Game has ended`)
+})
+
+// side buttons
+
+gridShow.addEventListener("click", function () {
     opt_grid = !opt_grid
     gridShow.innerText = `Helping grid: ${(opt_grid == true) ? "on" : "off"}`
     message(`Grid was turned ${(opt_grid == true) ? "on" : "off"}`)
-    if (opt_grid){
-        let audio = new Audio('audio/gamer/grid.mp3');
+    if (opt_grid && opt_voice) {
+        let audio = new Audio(`audio/${folder}/grid.mp3`);
         audio.play();
     }
 })
 
-voice.addEventListener("click", function(){
-    if (gamermode != true){
+voice.addEventListener("click", function () {
+    if (gamermode != true) {
         opt_voice = !opt_voice
         voice.innerText = `Voiceover: ${(opt_voice == true) ? "on" : "off"}`
         message(`Voiceover ${(opt_voice == true) ? "activated" : "deactivated"}`)
     } else {
-        let audio = new Audio('audio/gamer/voiceover_0' + fnc_rand(1,2) +'.mp3');
-        audio.play();
+        if (opt_voice) {
+            let audio = new Audio(`audio/${folder}/voiceover_0${fnc_rand(1, 2)}.mp3`);
+            audio.play();
+        }
     }
 })
 
-function fnc_rand (min, max) {
-    return Math.floor(Math.random() * max) + min
-}
+// side sliders
 
-let game_started = false
-
-startBtn.addEventListener("click", function(){
-    startBtn.disabled = true
-    endBtn.disabled = false
-    game_started = true
-    let audio = new Audio('audio/gamer/start.mp3');
-    audio.play();
-    message(`Game has started`)
+gridSld.addEventListener("input", function () {
+    gridNum = gridSld.value
+    gridSize = (896 / gridNum)
+    gridText.innerText = `Grid size: ${gridNum}`
+    game.update()
 })
 
-endBtn.addEventListener("click", function(){
-    startBtn.disabled = false
-    endBtn.disabled = true
-    game_started = false
-    let audio = new Audio('audio/gamer/end.mp3');
-    audio.play();
-    message(`Game has ended`)
+winSld.addEventListener("input", function () {
+    pointsToWin = winSld.value
+    winText.innerText = `Points to win: ${pointsToWin}`
 })
 
-document.getElementById("gamer_mode").addEventListener("click", function(){
+// just for fun
+
+document.getElementById("gamer_mode").addEventListener("click", function () {
     gamermode = true
+    folder = "gamer"
     document.getElementsByTagName("LINK")[1].setAttribute("href", "css/gamer.css")
     let audio = new Audio('audio/gamer/gamermode.mp3');
     audio.play();
     message(`GAMER MODE ACTIVATED`)
     opt_voice = true
+    voice.disabled = false
     voice.innerText = `Voiceover: on`
     message(`Voiceover activated`)
 })
