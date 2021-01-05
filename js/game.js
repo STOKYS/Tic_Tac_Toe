@@ -142,12 +142,21 @@ let game = {
 
 function win(winner) {
   game_started = false
+  wins += 3
   document.getElementById("title").innerText = (winner == 1) ? "Crosses win" : "Circles win"
   message(`${(winner == 1) ? "Crosses win" : "Circles win"}`)
   if (opt_voice) {
     let audio = new Audio(`audio/${folder}/${(winner == 1) ? "cross" : "circle"}_win.mp3`);
     audio.play();
   }
+  table(winner)
+}
+
+function table(winner){
+  console.log("TT")
+  document.getElementsByTagName("TD")[wins - 2].innerText = `${(winner == 1) ? "Cross" : "Circle"}`
+  document.getElementsByTagName("TD")[wins - 1].innerText = `${game.round}`
+  document.getElementsByTagName("TD")[wins].innerText = `Grid: ${gridNum}, PtW: ${pointsToWin}`
 }
 
 function message(text) {

@@ -80,8 +80,16 @@ h3 {
     color: rgb(67, 119, 83)
 }
 
+#console>h1{
+    position: fixed;
+    right: 28%;
+    font-size: 18px;
+    font-family: 'Share Tech Mono', monospace;
+    color: rgb(67, 119, 83)
+}
+
 .data {
-    height: 400px;
+    height: 450px;
 }
 
 .data>div {
@@ -130,7 +138,12 @@ table {
 
 td,
 th {
+    height: 22px;
     border: 1px solid black;
+}
+
+td{
+    padding-left: 10px
 }
 
 input[type=range] {

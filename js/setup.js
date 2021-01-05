@@ -20,6 +20,7 @@ let canvasY = null
 let gridX = null
 let gridY = null
 let tiles = []
+let wins = -1
 
 canvas = document.getElementById("cvgame")
 ctx = canvas.getContext("2d")
@@ -46,6 +47,8 @@ startBtn.addEventListener("click", function () {
         audio.play();
     }
     message(`Game has started`)
+    gridSld.disabled = true
+    winSld.disabled = true
 })
 
 endBtn.addEventListener("click", function () {
@@ -58,6 +61,8 @@ endBtn.addEventListener("click", function () {
         audio.play();
     }
     message(`Game has ended`)
+    gridSld.disabled = false
+    winSld.disabled = false
 })
 
 // side buttons
