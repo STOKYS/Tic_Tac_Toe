@@ -1,34 +1,46 @@
-
 canvas.addEventListener("mousemove", function (e) {
-  let cRect = canvas.getBoundingClientRect(); // Gets CSS pos, and width/height
-  canvasX = Math.round(e.clientX - cRect.left); // Subtract the 'left' of the canvas 
-  canvasY = Math.round(e.clientY - cRect.top); // from the X/Y positions to make  
-  game.update()
+  if (game_started) {
+    let cRect = canvas.getBoundingClientRect();
+    canvasX = Math.round(e.clientX - cRect.left);
+    canvasY = Math.round(e.clientY - cRect.top);
+    game.update()
+  }
 });
 
 canvas.addEventListener("click", function () {
-  let gridXs = (gridX < 10) ? "0" + gridX : gridX
-  let gridYs = (gridY < 10) ? "0" + gridY : gridY
-  let pushed = game.player + "" + gridXs + "" + gridYs
-  if (checkValid(pushed) == true || tiles.length == 0) {
-    if (opt_voice && game_started) {
-      let audio = new Audio(`audio/${folder}/${(game.player == 1) ? "cross" : "circle"}_0${fnc_rand(1,3)}.mp3`);
-      audio.play();
+  if (game_started) {
+    let gridXs = (gridX < 10) ? "0" + gridX : gridX
+    let gridYs = (gridY < 10) ? "0" + gridY : gridY
+    let pushed = game.player + "" + gridXs + "" + gridYs
+    if (checkValid(pushed, gridXs, gridYs)) {
+      if (opt_voice && game_started) {
+        let audio = new Audio(`audio/${folder}/${(game.player == 1) ? "cross" : "circle"}_0${fnc_rand(1,3)}.mp3`);
+        audio.play();
+      }
+      document.getElementById("who").innerText = `${(game.player == 1) ? "Circles" : "Crosses"} Turn`
+      tiles.push(pushed)
+      game.newRound()
+    } else {
+      message("Tile is already occupied or invalid")
     }
-    tiles.push(pushed)
-    game.newRound()
-  } else {
-    message("Tile is already occupied")
   }
 })
 
-function checkValid(pushed) {
+function checkValid(pushed, gridXs, gridYs) {
   let invalid = false
-  tiles.forEach(function (item) {
-    if (((item.slice(-4)) == (pushed.slice(-4)))) {
-      invalid = true
-    }
-  })
+  if (tiles.length != 0) {
+    tiles.forEach(function (item) {
+      if (((item.slice(-4)) == (pushed.slice(-4)))) {
+        invalid = true
+      }
+    })
+  }
+  if ((pushed.charAt(1) == "0" && pushed.charAt(2) == "0") || (pushed.charAt(3) == "0" && pushed.charAt(4) == "0")) {
+    invalid = true
+  }
+  if ((Number(gridXs) > (gridNum - 1)) || (Number(gridYs) > (gridNum - 1))) {
+    invalid = true
+  }
   if (invalid == true) {
     return false
   } else {
@@ -55,10 +67,7 @@ function writeGrid() {
 
 function showSelection() {
   let sele = (game.player == 1) ? "cross" : "circle"
-  ctx.beginPath();
-  ctx.rect(gridX * gridSize, gridY * gridSize, gridSize, gridSize);
-  ctx.stroke();
-  ctx.drawImage(eval(sele), gridX * gridSize, gridY * gridSize, gridSize, gridSize)
+  ctx.drawImage(eval(sele), (gridX * gridSize), (gridY * gridSize), gridSize, gridSize)
 }
 
 function drawGrid() {
@@ -104,6 +113,11 @@ let game = {
   round: 1,
   player: 1,
   gameStart: function () {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    game.round = 1
+    document.getElementById("round").innerText = `Round: ${game.round}`
+    game.player = 1
+    tiles = []
     drawGrid()
   },
   newRound: function () {

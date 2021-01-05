@@ -17,8 +17,11 @@ function checkWin() {
         i = (Number(i) < 11) ? ("0" + (Number(i) - 1)) : (Number(i) - 1)
         matches++
     }
-    if (matches == 0) {
+    if (matches < 1) {
         matches += 1
+        if (matches == 0){
+            matches += 1
+        }
     }
 
     message("Horizontal matches: " + matches)
@@ -37,8 +40,11 @@ function checkWin() {
             i = (Number(i) < 11) ? ("0" + (Number(i) - 1)) : (Number(i) - 1)
             matches++
         }
-        if (matches == 0) {
+        if (matches  < 1) {
             matches += 1
+            if (matches == 0){
+                matches += 1
+            }
         }
 
         message("Vertical matches: " + matches)
@@ -61,8 +67,11 @@ function checkWin() {
                 j = (Number(j) < 9) ? ("0" + (Number(j) + 1)) : (Number(j) + 1)
                 matches++
             }
-            if (matches == 0) {
+            if (matches < 1) {
                 matches += 1
+                if (matches == 0){
+                    matches += 1
+                }
             }
 
             message("Diagonal matches: " + matches)
@@ -85,8 +94,11 @@ function checkWin() {
                     j = (Number(j) < 11) ? ("0" + (Number(j) - 1)) : (Number(j) - 1)
                     matches++
                 }
-                if (matches == 0) {
+                if (matches < 1) {
                     matches += 1
+                    if (matches == 0){
+                        matches += 1
+                    }
                 }
 
                 message("Reversed Diagonal matches: " + matches)

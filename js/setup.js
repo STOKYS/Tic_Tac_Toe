@@ -52,6 +52,7 @@ endBtn.addEventListener("click", function () {
     startBtn.disabled = false
     endBtn.disabled = true
     game_started = false
+    game.gameStart()
     if (opt_voice) {
         let audio = new Audio(`audio/${folder}/end.mp3`);
         audio.play();
