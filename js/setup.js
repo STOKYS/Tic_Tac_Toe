@@ -34,8 +34,6 @@ blue.src = "img/blue.png"
 const red = new Image()
 red.src = "img/red.png"
 
-document.addEventListener('contextmenu', event => event.preventDefault());
-
 // main buttons
 
 startBtn.addEventListener("click", function () {

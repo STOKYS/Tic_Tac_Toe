@@ -27,10 +27,6 @@
     background: #555;
 }
 
-body {
-    overflow: hidden;
-}
-
 canvas {
     border: 1px solid black;
 }
@@ -54,7 +50,6 @@ canvas {
     margin: auto;
     margin-top: 20px;
     width: 90%;
-    /*height: 100px;*/
     border: 1px solid black;
 }
 
@@ -156,4 +151,17 @@ input[type=range] {
     margin: 10px 0px 3px 0px;
     width: 50%;
     float: left;
+}
+
+@media screen and (max-width: 1000px) {
+    .game {
+        float: none;
+        width: 100%;
+        margin: 0;
+    }
+    .controls {
+        float:  none;
+        width: 100%;
+        margin: 0;
+    }
 }
